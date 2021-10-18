@@ -1,17 +1,44 @@
 "use strict"
 
 // criar um array, mas só que ele não existe, fazendo a função do back-end
-const imagens = [
-   "./img/imagem1.png",
-    "./img/imagem2.png",
-    "./img/imagem3.png",
-    "./img/imagem4.png",
-    "./img/imagem5.png",
-    "./img/imagem6.png",
-    "./img/imagem7.png",
-    "./img/imagem4.png"
+// const imagens = [
+//    "./img/imagem1.png",
+//     "./img/imagem2.png",
+//     "./img/imagem3.png",
+//     "./img/imagem4.png",
+//     "./img/imagem5.png",
+//     "./img/imagem6.png",
+//     "./img/imagem7.png",
+//     "./img/imagem4.png"
 
-]
+// ]
+
+const limparElementos = (elemento) =>{ // 12 passo - criar uma funcao para limpar
+    while(elemento.firstChild){ // equanto tiver o primeiro elemento remove o ultimo, limpa toda div container para garregar denovo a div
+        elemento.removeChild(elemento.lastChild);
+    }
+
+}
+
+//criando funcao - primeiro de tudo
+const pesquisarImagens = async (evento) => {
+    if(evento.key === 'Enter'){ // 8 passo colocar todo o codigo 1,2,3,4 aqui dentro do if
+        const raca = evento.target.value; // 9 passo, pesquisar a raca
+         const url = `https://dog.ceo/api/breed/${raca}/images`; // 4 passo, depois que criar o 9 passo, colocar aqui a variavel ${raca}
+        const imagensResponse = await fetch(url); //1 passo
+        const imagens = await imagensResponse.json(); // 2 passo
+        
+        limparElementos(document.querySelector('.galeria-container')); // 13 passo, chamar a funcao que limpa
+        limparElementos(document.querySelector('.slide-container')); // 13 passo, chamar a funcao que limpa
+
+        carregarGaleria(imagens); //3 passo, 10 passo tirar o console.log e mostrar
+        carregarSlide(imagens); // 11 passo colocar o slide
+
+        
+   
+    }
+};
+
 
 
 //tirar o img/ e o.png, limpando a url
@@ -68,6 +95,9 @@ container.appendChild(novaDiv) //appendchild colocando o conteudo dentro do cont
 const carregarSlide =(imgs) => imgs.forEach(criarSlide)
 
 // chamando a função carregarGaleria,carregarSlide
-carregarGaleria(imagens)
+// carregarGaleria(imagens)
 
-carregarSlide(imagens)
+// carregarSlide(imagens)
+
+// quando a pessoa pesquisar, 5 passo
+ document.querySelector('.pesquisa-container input').addEventListener('keypress', pesquisarImagens);
